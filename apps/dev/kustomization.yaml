@@ -3,7 +3,7 @@ kind: Kustomization
 
 namespace: whoami-flux
 
-ressources:  # ERREUR VOLONTAIRE (TP20) : champ mal orthographié
+resources:
   - namespace.yaml
   - ../base
 
