@@ -1,0 +1,8 @@
+apiVersion: v2
+name: whoami
+description: Application whoami (TP15) packagée avec Helm
+type: application
+# version    = version du CHART (packaging) : à incrémenter à chaque modification du chart
+# appVersion = version de l'APPLICATION livrée (tag d'image par défaut)
+version: 0.1.0
+appVersion: "v1.10.0"

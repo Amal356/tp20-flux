@@ -1,0 +1,34 @@
+# TP20 partie 4 : HelmRelease du chart whoami du TP15 (copié dans charts/whoami/).
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: whoami-helm
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: whoami
+  namespace: whoami-helm
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: ./charts/whoami # chart lu directement dans le dépôt Git
+      sourceRef:
+        kind: GitRepository
+        name: flux-system
+        namespace: flux-system
+  timeout: 2m # délai d'attente des ressources (helm --wait) : un échec est détecté en 2 min
+  # COMPLÉTÉ : valeurs du chart
+  values:
+    replicaCount: 2
+    env:
+      WHOAMI_NAME: whoami-flux-helm
+    ingress:
+      enabled: true
+      host: whoami-flux.lab.local
+  # COMPLÉTÉ : en cas d'échec de mise à jour, revenir automatiquement à la version précédente
+  upgrade:
+    remediation:
+      retries: 2         # 2 nouvelles tentatives
+      strategy: rollback # puis helm rollback vers la dernière révision réussie

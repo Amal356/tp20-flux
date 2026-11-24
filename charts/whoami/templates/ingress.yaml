@@ -1,0 +1,22 @@
+{{- /* TODO complété : rendu uniquement si ingress.enabled */ -}}
+{{- if .Values.ingress.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "whoami.fullname" . }}
+  labels:
+    {{- include "whoami.labels" . | nindent 4 }}
+spec:
+  ingressClassName: {{ .Values.ingress.className }}
+  rules:
+    - host: {{ required "ingress.host est obligatoire quand l'ingress est activé" .Values.ingress.host | quote }}
+      http:
+        paths:
+          - path: {{ .Values.ingress.path }}
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ include "whoami.fullname" . }}
+                port:
+                  number: {{ .Values.service.port }}
+{{- end }}
