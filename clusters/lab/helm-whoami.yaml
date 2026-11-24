@@ -22,8 +22,6 @@ spec:
   # COMPLÉTÉ : valeurs du chart
   values:
     replicaCount: 2
-    image:
-      tag: v9.9.9   # ERREUR VOLONTAIRE (TP20) : tag inexistant
     env:
       WHOAMI_NAME: whoami-flux-helm
     ingress:
